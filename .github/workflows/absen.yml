@@ -2,43 +2,47 @@ name: Absensi Otomatis
 
 on:
   schedule:
+    # Senin
+    - cron: '5 1 * * 1'   # 08:05 WIB
+    - cron: '5 7 * * 1'   # 14:05 WIB
+
     # Selasa
-    - cron: '5 1 * * 2'   # 08:05 WIB
     - cron: '50 3 * * 2'  # 10:50 WIB
+    - cron: '40 9 * * 2'  # 16:40 WIB
 
     # Rabu
     - cron: '5 1 * * 3'   # 08:05 WIB
-    - cron: '50 3 * * 3'  # 10:50 WIB
     - cron: '5 7 * * 3'   # 14:05 WIB
 
     # Kamis
-    - cron: '5 7 * * 4'   # 14:05 WIB
-    - cron: '0 10 * * 4'  # 17:00 WIB
+    - cron: '0 8 * * 4'   # 15:00 WIB
 
     # Jumat
-    - cron: '50 3 * * 5'  # 10:50 WIB
+    - cron: '5 1 * * 5'   # 08:05 WIB
+    - cron: '0 8 * * 5'   # 15:00 WIB
+
+    # Sabtu
+    - cron: '50 3 * * 6'  # 10:50 WIB
 
   workflow_dispatch:
+
 jobs:
   run-absen:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: 1. Ambil kode dari repository
         uses: actions/checkout@v4
 
-      - name: 2. Setup Chrome
-        uses: browser-actions/setup-chrome@latest
-
-      - name: 3. Siapkan lingkungan Python
+      - name: 2. Siapkan Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-          
-      - name: 4. Install library dari requirement.txt
+          python-version: '3.13'
+
+      - name: 3. Install library dari requirement.txt
         run: pip install -r requirement.txt
 
-      - name: 5. Jalankan skrip absen
+      - name: 4. Jalankan skrip absen
         env:
           NPM: ${{ secrets.NPM }}
           PASSWORD: ${{ secrets.PASSWORD }}
-        run: python -u absen.py
+        run: python absen.py
