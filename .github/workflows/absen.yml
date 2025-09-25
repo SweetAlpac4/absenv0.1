@@ -16,6 +16,7 @@ on:
 
     # Kamis
     - cron: '0 8 * * 4'   # 15:00 WIB
+    - cron: '5 1 * * 3'   # 08:05 WI
 
     # Jumat
     - cron: '5 1 * * 5'   # 08:05 WIB
